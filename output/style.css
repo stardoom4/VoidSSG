@@ -1,14 +1,14 @@
 body {
   font-family: Garamond, serif;;
-  background-color: #080c0c;
-  color: #d9ffdb;
-  max-width: 900px;
+  background-color: #000000;
+  color: #ffffff;
+  max-width: 644px;
   margin: auto;
   padding: 8px;
 }
 a {
   font-size: 1.4rem;
-  color: #357670;
+  color: #ffffff;
   text-decoration: underline;
 }
 .navigation-homepage ul,
@@ -111,18 +111,3 @@ blockquote p {
     width: 160px;
 }
 
-/* Styles for search results */
-#searchResults {
-    margin-top: 20px;
-}
-
-#searchResults a {
-    display: block;
-    margin-bottom: 5px;
-    text-decoration: none;
-    color: #333;
-}
-
-#searchResults a:hover {
-    color: #007bff;
-}
