@@ -225,3 +225,6 @@ main>ul li {
 input[type=text] {
   font-color: #000;
 }
+ol {
+  list-style-type: upper-roman;
+}
