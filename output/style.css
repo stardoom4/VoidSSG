@@ -125,7 +125,7 @@ q {
 
 img,
 svg {
-  max-width: 100%;
+  max-width: 624px;
   display: inline-block;
   margin: 0 0 25px;
 }
