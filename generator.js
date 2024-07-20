@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const marked = require('markdown-it')({
-  html: true, // Enable HTML tags in source
+  html: true,
 });
 const nunjucks = require('nunjucks');
 
@@ -18,12 +18,10 @@ const env = nunjucks.configure(templatesDir, {
   autoescape: true,
 });
 
-// Function to generate HTML from Markdown
 function convertMarkdownToHTML(markdown) {
   return marked.render(markdown);
 }
 
-// Function to replace wiki-style links with actual HTML links
 function processWikiLinks(content) {
   const wikiLinkRegex = /\[([^\]]+)\]\(([^)]+)\.md\)/g;
   const processedContent = content.replace(wikiLinkRegex, (match, text, link) => {
@@ -32,35 +30,65 @@ function processWikiLinks(content) {
   return processedContent;
 }
 
-// Function to generate static pages
+function getFilesInDirectory(directory) {
+  return fs.readdirSync(directory).filter(file => {
+    const filePath = path.join(directory, file);
+    return fs.statSync(filePath).isFile() && path.extname(file) === '.md';
+  });
+}
+
+function generateFileExplorerPage(files, outputDir) {
+  const explorerTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Explorer</title>
+</head>
+<body>
+  <h1>File Explorer</h1>
+  <ul>
+    ${files.map(file => {
+      const fileName = path.basename(file, path.extname(file));
+      return `<li><a href="${fileName}.html">${file}</a></li>`;
+    }).join('')}
+  </ul>
+</body>
+</html>
+  `;
+
+  fs.writeFileSync(path.join(outputDir, 'file-explorer.html'), explorerTemplate);
+}
+
 function generatePages() {
   const pagesDir = path.join(__dirname, 'pages');
 
-  // Read each markdown file in the pages directory
-  fs.readdirSync(pagesDir).forEach((fileName) => {
+  // Get list of files
+  const files = getFilesInDirectory(pagesDir);
+
+  // Generate each page
+  files.forEach((fileName) => {
     const filePath = path.join(pagesDir, fileName);
 
     if (fs.statSync(filePath).isFile() && path.extname(fileName) === '.md') {
       const pageContent = fs.readFileSync(filePath, 'utf-8');
 
-      // Process wiki-style links
       const processedContent = processWikiLinks(pageContent);
 
-      // Extract page name without extension
       const pageName = path.basename(fileName, path.extname(fileName));
 
-      // Render the page using Nunjucks
       const outputHtml = nunjucks.render('page-template.html', {
         content: convertMarkdownToHTML(processedContent),
         title: pageName,
       });
 
-      // Write the generated HTML to the output directory
       const outputPath = path.join(outputDir, `${pageName}.html`);
       fs.writeFileSync(outputPath, outputHtml);
     }
   });
+
+  // Generate the file explorer page
+  generateFileExplorerPage(files, outputDir);
 }
 
-// Generate the pages
 generatePages();
