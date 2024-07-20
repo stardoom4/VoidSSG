@@ -50,12 +50,12 @@ function generateFileExplorerPage(files, outputDir) {
 </head>
 <body>
   <h1>File Explorer</h1>
-  <ul>
+  <ol>
     ${files.map(file => {
       const fileName = path.basename(file, path.extname(file));
       return `<li><a href="${fileName}.html">${file}</a></li>`;
     }).join('')}
-  </ul>
+  </ol>
 </body>
 </html>
   `;
