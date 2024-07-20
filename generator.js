@@ -42,11 +42,15 @@ function generateFileExplorerPage(files, outputDir) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
   <meta charset="UTF-8">
   <title>File Explorer</title>
 </head>
 <body>
   <h1>File Explorer</h1>
+  <hr>
   <ul>
     ${files.map(file => {
       const fileName = path.basename(file, path.extname(file));
