@@ -125,7 +125,7 @@ q {
 
 img,
 svg {
-  max-width: 624px;
+  max-width: 100%;
   display: inline-block;
   margin: 0 0 25px;
 }
@@ -202,4 +202,8 @@ main>ul li {
 input[type=text] {
   font-color: #000;
 }
+}
+
+img {
+  width: 624px;
 }
