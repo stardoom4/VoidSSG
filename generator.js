@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const marked = require('markdown-it')();
+const marked = require('markdown-it')({
+  html: true, // Enable HTML tags in source
+});
 const nunjucks = require('nunjucks');
 
 // Set up Nunjucks environment
