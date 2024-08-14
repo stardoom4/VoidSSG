@@ -309,8 +309,6 @@ background:#fff
 #contents p{
 padding-bottom:0.1em;
 background-color:#000;
-background-image:-webkit-linear-gradient(left, #000 1.1px, rgba(0,0,0,0) 1px), -webkit-linear-gradient(top, #666 1.1px, rgba(102,102,102,0) 1px);
-background-image:linear-gradient(to right, #000 1.1px, rgba(0,0,0,0) 1px), linear-gradient(to bottom, #666 1.1px, rgba(102,102,102,0) 1px);
 background-size:2px 2.6rem;
 line-height:2
 }
@@ -336,7 +334,7 @@ margin-left:20px
 ------------------------------ */
 img{
 height:auto;
-max-width:100%
+max-width:100%;
 }
 }
 /* ===================================
