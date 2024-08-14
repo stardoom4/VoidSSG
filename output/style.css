@@ -1,209 +1,465 @@
-:root {
-  font-family: serif;
-  background-color: #000000;
+html,body,div,span,iframe,h1,h2,h3,h4,p,pre,del,em,img,b,i,dl,dt,dd,ol,ul,li,form,table,tbody,tr,th,td,article,aside,footer,header,nav,section{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;box-sizing:border-box}
+article,aside,footer,header,nav,section{display:block}
+body{line-height:1;overflow-wrap:break-word;word-wrap:break-word}
+input,textarea,select{font-family:inherit;font-size:inherit;color:inherit;vertical-align:middle;box-sizing:border-box}
+a{margin:0;padding:0;text-decoration:none;outline:none;font-size:100%;vertical-align:baseline;background:transparent}
+a img{border-style:none}
+ul,li{list-style-type:none}
+.cf:before,.cf:after{content:" ";display:table}.cf:after{clear:both}
+
+/* ===================================
+背景,文字,リンク設定
+=================================== */
+
+html{
+font-size:62.5%
+}
+body{
+background:#000;/* 背景色 */
+color:#fff;/* 文字色 */
+font-size:1.3em;/* 文字の大きさ */
+font-family:'Segoe UI','游ゴシック Medium','Yu Gothic Medium','游ゴシック体',YuGothic,'Hiragino Kaku Gothic ProN','メイリオ',Meiryo,sans-serif;
+letter-spacing:.1em;
+line-height:1.5;
+padding:20px;
+text-align:center
+}
+/*  Googleフォントを使用しない場合は不要
+------------------------------ */
+h1,h2,nav span,#fl{
+font-family:'Elsie Swash Caps','Segoe UI','游ゴシック Medium','Yu Gothic Medium','游ゴシック体',YuGothic,'Hiragino Kaku Gothic ProN','メイリオ',Meiryo,sans-serif;font-weight:900
+}
+/*  リンク
+------------------------------ */
+a{
+color:#41341f
+}
+#contents a{
+color:#da184e;
+text-decoration:underline;
+transition:.6s
+}
+#contents a:not(.bg-none):hover{
+background:#da184e;
+border-radius:5px;
+color:#fff;
+text-decoration:none
+}
+header a,footer a{
+color:#fff
 }
 
-@supports (font-variation-settings: normal) {
-  :root {
-    font-family: serif;
-  }
+/* ===================================
+基本
+=================================== */
+
+#wrapper{
+margin:10px auto;
+position:relative;
+text-align:left;
+max-width:725px; /* 全体の幅・大きさはここで変更 */
+}
+header{
+background:url(image/back01.png) no-repeat 100% 0;
+border:1px solid #da184e;
+border-radius:3px;
+color:#fff;
+min-height:200px
+}
+#header-inner{
+padding:10px 20px;
+text-align:right
+}
+#rightcolumn-wrap{ 
+float:right;
+margin-left:-250px; /* (※1)と同じだけマイナス */
+width:100%
+}  
+#rightcolumn{
+margin-left:250px; /* (※1)と同じ */
+padding:20px 0 20px 20px;
+position:relative
+}
+#leftcolumn-wrap{
+float:left;
+width:250px; /* 左側の幅(※1) */
+}
+#leftcolumn{
+padding:20px 20px 20px 0;
+text-align:center
+}
+#column{
+padding:20px
+}
+footer{
+background:url(image/back01.png);
+border:1px solid #da184e;
+border-radius:3px;
+color:#fff;
+padding:10px 20px;
+text-align:right;
+width:100%
+}
+/*  文字の縁取り
+------------------------------ */
+header,footer,nav span{
+text-shadow:1px 0 0 #41341f, 1px 1px 0 #41341f, 0 1px 0 #41341f, -1px 1px 0 #41341f, -1px 0 0 #41341f, -1px -1px 0 #41341f, 0 -1px 0 #41341f, 1px -1px 0 #41341f
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-decoration: none;
-  color: #ffffff;
-  max-width: 624px;
-  clear: both;
+/* ===================================
+index
+=================================== */
+
+#index #wrapper{
+max-width:500px
 }
 
-body {
-  padding: 30px;
-  font-size: 16px;
+/* ===================================
+メニュー
+=================================== */
+
+#menu{
+display:block;
+margin:0 auto
+}
+nav span{
+background-image:url(image/back02.png);
+border:1px solid #da184e;
+border-radius:3px;
+color:#fff;
+display:block;
+font-size:1.7rem;
+font-weight:700;
+line-height:2em
+}
+nav li{
+display:block
+}
+nav li ul{
+margin:10px 0 20px
+}
+nav li ul li{
+border-bottom:1px dashed #41341f
+}
+#contents #menu a{
+color:#fff;
+display:block;
+padding:5px;
+position:relative;
+text-decoration:none;
+transition:.6s
+}
+#contents #menu a:hover{
+background:rgba(241,33,64,.6);
+letter-spacing:.3em
+}
+/*  メニューを開くボタン、前に戻るボタン非表示
+------------------------------ */
+#open,#back{display:none}
+
+/* ===================================
+ページ上部へのリンク、著作権表示
+=================================== */
+
+#pagetop{
+background:rgba(218,24,78,.7);/* 背景 */
+color:#fff;/* 色 */
+border-radius:10px;
+box-sizing:border-box;
+display:block;
+padding:10px;
+position:fixed;
+text-align:center;
+z-index:10
+}
+#pagetop:hover{
+background:rgba(218,24,78,.9)
 }
 
-body>* {
-  margin-bottom: 25px;
+/* ===================================
+見出し、枠、線
+=================================== */
+
+h1{
+font-size:3rem;
+line-height:1;
+margin:0 0 .5em
+}
+h2{
+background:#41341f;
+border-radius:3px;
+border:1px solid #da184e;
+color:#fff;
+font-size:1.8rem;
+padding:.2em;
+margin:10px 0
+}
+h3{
+border-left:8px solid #da184e;
+margin:20px 0;
+padding-left:13px
+}
+dt{
+clear:both;
+color:#b9b988;
+font-weight:700;
+float:left;
+margin:0 0 5px;
+width:12em
+}
+dd{
+border-bottom:dotted 1px;
+margin:0 0 5px 12em
+}
+#leftcolumn dt{
+border-top:double 3px #41341f;
+border-bottom:double 3px #41341f;
+float:none;
+clear:none;
+padding:.2em 0;
+margin:10px 0;
+width:auto
+}
+#leftcolumn dd{
+border:0;
+margin:0
+}
+em{
+font-weight:700;
+font-style:normal
+}
+input,textarea{
+background:#4a3a0a;
+border:1px solid #da184e;
+color:#fff;
+margin:3px 0;
+width:250px
+}
+textarea{
+height:50px
+}
+#leftcolumn input,#leftcolumn textarea{
+width:100%
+}
+height:50px
+}
+hr{
+border:0;
+border-top:1px solid #ccc;
+display:block;
+margin:1em 0;
+padding:0;
+height:1px
+}
+.marker{
+background:#da184e;
+background:-webkit-linear-gradient(rgba(218,24,78,0) 70%, #da184e 0%);
+background:linear-gradient(rgba(218,24,78,0) 70%, #da184e 0%)
+}
+.dcline{
+border-left:8px solid #4a3a0a;
+margin:5px 0;
+padding:3px
+}
+.textbox{
+border:1px dotted;
+border-radius:3px;
+padding:1em 0;
+text-align:center
+}
+.title{
+color:#da184e;
+font-size:2rem;
+font-weight:700;
+margin:2em 0;
+text-align:right
+}
+.txt{
+border-left:1px dotted;
+color:#999;
+margin:1em;
+padding:0 0 0 1em
+}
+.frame{
+background:#fff;
+padding:6px;
+border-radius:3px;
+box-shadow:4px 4px 4px #ccc
+}
+.box1{
+background:#d1704b;
+border-radius:10px;
+margin:1em 0;
+padding:10px
+}
+.box2{
+background:#4a3a0a;
+border-radius:10px;
+margin:1em 0;
+padding:10px
+}
+.box1 a,.box2 a{
+background:#fff
+}
+/*  文字の下の線
+------------------------------ */
+/* bodyのfont-sizeを変更したら数値を変更 */
+/* 2.6 = font-size:1.3 x line-height:2 */
+#contents p{
+padding-bottom:0.1em;
+background-color:#000;
+background-image:-webkit-linear-gradient(left, #000 1.1px, rgba(0,0,0,0) 1px), -webkit-linear-gradient(top, #666 1.1px, rgba(102,102,102,0) 1px);
+background-image:linear-gradient(to right, #000 1.1px, rgba(0,0,0,0) 1px), linear-gradient(to bottom, #666 1.1px, rgba(102,102,102,0) 1px);
+background-size:2px 2.6rem;
+line-height:2
+}
+/* ===================================
+横幅840pxで切り替え
+=================================== */
+@media screen and (max-width: 800px){
+body{
+padding:10px 20px 50px
+}
+header{
+background-size:cover;
+min-height:100px
+}
+dt{
+float:none;
+clear:none
+}
+dd{
+margin-left:20px
+}
+/*  画像の縮小表示
+------------------------------ */
+img{
+height:auto;
+max-width:100%
+}
+}
+/* ===================================
+スマホ、タブレット用
+横幅600pxで切り替え
+=================================== */
+
+@media screen and (max-width: 600px){
+body{
+font-size:1.5em;
+height:auto
+}
+#wrapper{
+width:auto
+}
+#header-inner{
+text-align:left
+}
+h1:not(.index){
+font-size:1.8rem;
+padding-right:100px; /* メニューを開くボタン分 */
+min-height:40px;
+margin:0 0 .2em
+}
+#rightcolumn-wrap{
+float:none;
+margin:0
+}
+#rightcolumn{
+margin:0;
+padding:10px 0;
+position:static
+}
+#column{
+padding:10px 0
+}
+#leftcolumn-wrap{
+float:none;
+width:100%
+}
+#leftcolumn{
+padding:0 10px
+}
+/*  文字の下の線
+------------------------------ */
+/* bodyのfont-sizeを変更したら数値を変更 */
+/* 2.8 = font-size:1.5 x line-height:2 */
+#contents p{
+background-size:2px 3rem;
+line-height:2
 }
 
-body>*>* {
-  margin-bottom: 25px;
-}
+/* ===================================
+スマホ、タブレット用メニュー
+=================================== */
 
-table td,
-table th {
-  vertical-align: top;
-  padding: 2.5px 5px;
-  text-align: left;
-  border: 1px solid
+/*  スライド
+------------------------------ */
+#leftcolumn-wrap{
+background:#322612;
+color:#fff;
+padding:70px 10px 20px; /* メニューボタン分空ける */
+line-height:2;
+margin:0;
+position:fixed;
+height:100%;width:300px; /* (*1)同じにする */
+top:0;right:0;
+-ms-transform:translate(300px); /* (*1)同じにする */
+-webkit-transform:translate(300px); /* (*1)同じにする */
+transform:translate(300px); /* (*1)同じにする */
+transition:all .3s;
+z-index:1000
 }
+#side-bg{
+background:rgba(51,51,51,.5)/* 周りの背景色 */
+}
+/*  メニューを開くボタン/前に戻るボタン
+------------------------------ */
+#open,#back{
+background:#41341f;
+border:1px solid;
+border-radius:5px;
+color:#fff; /* 文字色 */
+display:inline-block;
+position:absolute;
+text-align:center;
+height:40px;width:40px; /* 大きさ */
+top:10px;right:15px; /* メニューを開くボタンの位置 */
+z-index:1001
+}
+#open-icon,#open-icon:before,#open-icon:after{
+background:#fff/* 線の色 */
+}
+/*  前に戻るボタン
+------------------------------ */
+#back{
+right:60px; /* 位置 */
+z-index:auto
+}
+#back a{
+color:#fff;
+display:block;
+height:100%
+}
+#back a:before{
+content:'\21E6';
+display:block;
+font-size:17px;
+line-height:17px;
+position:relative;
+top:5px;width:100%
+}
+#leftcolumn{height:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+#leftcolumn-wrap.open{-ms-transform:translate(0);-webkit-transform:translate(0);transform:translate(0)}
+#side-bg{display:none;position:fixed;height:100%;width:100%;top:0;left:0;z-index:999;cursor:pointer}
+.open-text,.back-text{font-size:10px;letter-spacing:0;position:absolute;bottom:0;left:0;width:100%}/* ボタン文字サイズ */
+#open.buttonclose{position:fixed;right:35px}
+#open-icon{display:block;margin:-1px 0 0 -9px;position:absolute;top:14px;left:50%;height:2px;width:18px}
+#open-icon:before,#open-icon:after{content:"";display:block;position:absolute;top:50%;left:0;height:2px;width:18px;transition:.3s}
+#open-icon:before{margin-top:-7px}
+#open-icon:after{margin-top:5px}
+#open .close{background:transparent}
+#open .close:before,#open .close:after{margin-top:0}
+#open .close:before{-ms-transform:rotate(-45deg);-webkit-transform:rotate(-45deg);transform:rotate(-45deg)}
+#open .close:after{-ms-transform:rotate(-135deg);-webkit-transform:rotate(-135deg);transform:rotate(-135deg)}
 
-table td>pre,
-table th>pre {
-  border: 1px solid
-  background: none;
-  padding: 0;
-  margin: 0;
-}
-
-header {
-  float: left;
-  margin: 2px 30px 30px 0;
-}
-
-
-figure:first-child img {
-  margin-left: -30px;
-  max-width: 100vw;
-  width: 800px;
-}
-
-figure>* {
-  margin-bottom: 25px;
-}
-
-figure figcaption {
-  max-width: 400px;
-}
-
-h2 {
-  max-width: 400px;
-}
-
-h4 {
-  font-style: italic;
-  font-weight: normal;
-  line-height: 24px;
-  text-decoration: underline dotted;
-  max-width: 400px;
-}
-
-ul,
-ol {
-  margin: 0 30px 30px 30px;
-}
-
-ol {
-  list-style-type: upper-roman;
-}
-
-ul ul {
-  margin-bottom: 0;
-}
-
-p {
-  line-height: 160%;
-}
-
-a {
-  text-decoration: underline;
-}
-
-a:hover,
-::selection {
-  background-color: #fff;
-  color: #000;
-  text-decoration: none;
-}
-
-a strong:hover,
-::selection {
-  background-color: #fff;
-  color: #000;
-  text-decoration: none;
-}
-
-q {
-  font-family: serif;
-  font-size: 18px;
-  font-style: italic;
-  display: block;
-  max-width: 400px;
-}
-
-img,
-svg {
-  max-width: 100%;
-  display: inline-block;
-  margin: 0 0 25px;
-}
-
-pre {
-  overflow: auto;
-  background: #000;
-  padding: 10px;
-  font-size: 80%;
-  margin-bottom: 20px;
-  max-height: 700px;
-}
-
-code {
-  white-space: pre;
-}
-article {
-  font-family: monospace;
-}
-
-hr {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-footer {
-  border-top: 1.5px solid;
-  padding: 30px 0 0 0;
-  clear: both;
-}
-
-footer img {
-  margin: 0 0 -10px 0;
-  width: 30px;
-}
-
-footer>* {
-  display: inline-block;
-  margin-right: 5px;
-}
-
-blockquote>p {
-  color: white;
-  background: black;
-  padding: 0.5em 10px;
-  font-family: italic;
-  font-size: 15px;
-}
-
-blockquote::selection {
-  background-color: #000;
-  color: #fff;
-  text-decoration: none;
-}
-
-del {
-  text-decoration: line-through;
-}
-
-main>ul li {
-  line-height: 150%;
-}
-
-.poem {
-  font-family: serif;
-  font-style: italic;
-  font-size: 18px;
-  line-height: 160%;
-  margin: 0 0 30px 0;
-  background: none;
-  padding: 0;
-  margin: 0;
-}
-input[type=text] {
-  font-color: #000;
-}
-}
-
-img {
-  width: 624px;
 }
