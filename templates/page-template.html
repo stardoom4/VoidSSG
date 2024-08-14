@@ -7,10 +7,109 @@
   <link rel="stylesheet" href="/style.css">
   <title>{{ title }}</title>
 <body>
-  <main>
+<!-- ▼全体の囲み▼ -->
+<div id="wrapper">
+
+<!-- メニューを開くボタン&前に戻るボタン -->
+<div id="open"><span id="open-icon"></span><span class="open-text">menu</span></div>
+<div id="back"><a href="javascript:history.back();"><span class="back-text">back</span></a></div>
+
+<!-- ▼ヘッダ▼ -->
+<header>
+<div id="header-inner">
+<!-- サイト名 -->
+<h1><a href="index2.html">SiteName,responsive_n030</a></h1>
+ここにも文字書けます
+</div>
+</header><!-- ▲ヘッダ▲ -->
+
+<!-- ▼メイン▼ -->
+<div id="contents" class="cf">
+
+<!-- ▼右側▼ -->
+<div id="rightcolumn-wrap">  
+<div id="rightcolumn">
+<article>
+ <main>
 
     {{ content | safe }}
 
   </main>
+</article>
+
+</div></div><!-- ▲右側▲ -->
+
+
+<!-- ▼左側▼ -->
+<div id="side-bg"></div>
+<div id="leftcolumn-wrap">
+<div id="leftcolumn">
+
+<!-- ▼メニュー▼ -->
+<h2>Menu</h2>
+<div id="menu">
+<nav>
+<ul>
+
+<li><span>SITE MAP</span>
+ <ul>
+  <li><a href="index2.html">TOP</a>
+  <li><a href="index2.html">PROFILE</a>
+ </ul>
+</li>
+
+<li><span>MAIN</span>
+ <ul>
+   <li><a href="sample02.html">NOVEL</a>
+   <li><a href="#">ILLUST</a>
+   <li><a href="#">WORKS</a>
+ </ul>
+</li>
+
+<li><span>OTHER</span>
+ <ul>
+   <li><a href="link.html">LINK</a>
+   <li><a href="sample.html">SAMPLE</a>
+   <li><a href="sample02.html">SAMPLE02</a>
+ </ul>
+</li>
+
+</ul>
+</nav>
+</div>
+<!-- ▲メニュー▲ -->
+
+<h2>Update</h2>
+<!-- テキストエリア -->
+<textarea rows="3" cols="20">
+20**/8/16 up
+</textarea>
+
+<h2>Link</h2>
+
+SITE NAME:<br>MASTER:<br>URL:<br>
+<img src="image/banner200.gif" alt="banner" width="200" height="40"><br>
+<a href="#">テキストリンク</a><br>
+<a href="#">テキストリンク</a><br>
+<a href="#">テキストリンク</a><br>
+
+</div></div><!-- ▲左側▲ -->
+
+</div><!-- ▲メイン▲ -->
+
+<!-- ▼フッタ▼ -->
+<footer>
+<div id="fl"><a href="http://foollovers.com" target="_blank">designed</a></div>
+</footer><!-- ▲フッタ▲ -->
+
+</div><!-- ▲全体の囲み▲ -->
+
+<!-- ページトップに戻る -->
+<a href="#" id="pagetop">▲top</a>
+
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/jquery.scroll.js"></script>
+<script src="/jquery.toggle.js"></script>
 </body>
 </html>
