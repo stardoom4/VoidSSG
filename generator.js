@@ -46,9 +46,27 @@ function generateFileExplorerPage(files, outputDir) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
   <meta charset="UTF-8">
-  <title>File Explorer</title>
+  <title>Explorer</title>
 </head>
 <body>
+<div id="wrapper">
+
+<!-- メニューを開くボタン&前に戻るボタン -->
+<div id="open"><span id="open-icon"></span><span class="open-text">menu</span></div>
+<div id="back"><a href="javascript:history.back();"><span class="back-text">back</span></a></div>
+
+<!-- ▼ヘッダ▼ -->
+<header>
+<div id="header-inner">
+<!-- サイト名 -->
+<h1><a href="/">{{ title }}</a></h1>
+</div>
+</header>
+<div id="contents" class="cf">
+<div id="rightcolumn-wrap">  
+<div id="rightcolumn">
+<article>
+<main>
   <h1>File Explorer</h1>
   <ol>
     ${files.map(file => {
@@ -56,11 +74,47 @@ function generateFileExplorerPage(files, outputDir) {
       return `<li><a href="${fileName}.html">${file}</a></li>`;
     }).join('')}
   </ol>
+  </main>
+</article>
+
+</div></div><!-- ▲右側▲ -->
+
+
+<!-- ▼左側▼ -->
+<div id="side-bg"></div>
+<div id="leftcolumn-wrap">
+<div id="leftcolumn">
+
+<!-- ▼メニュー▼ -->
+<h2>Menu</h2>
+<div id="menu">
+<nav>
+<ul>
+
+<li><span>SITE MAP</span>
+ <ul>
+  <li><a href="/">HOME</a>
+  <li><a href="explorer.html">EXPLORER</a>
+ </ul>
+</li>
+</ul>
+</nav>
+</div>
+</div></div>
+</div>
+<footer>
+<div id="fl"><a href="http://foollovers.com" target="_blank">designed</a></div>
+</footer>
+</div>
+<a href="#" id="pagetop">▲top</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/jquery.scroll.js"></script>
+<script src="/jquery.toggle.js"></script>
 </body>
 </html>
   `;
 
-  fs.writeFileSync(path.join(outputDir, 'file-explorer.html'), explorerTemplate);
+  fs.writeFileSync(path.join(outputDir, 'explorer.html'), explorerTemplate);
 }
 
 function generatePages() {
