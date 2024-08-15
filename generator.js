@@ -59,7 +59,7 @@ function generateFileExplorerPage(files, outputDir) {
 <header>
 <div id="header-inner">
 <!-- サイト名 -->
-<h1><a href="/">{{ title }}</a></h1>
+<h1><a href="/">Explorer</a></h1>
 </div>
 </header>
 <div id="contents" class="cf">
@@ -67,7 +67,7 @@ function generateFileExplorerPage(files, outputDir) {
 <div id="rightcolumn">
 <article>
 <main>
-  <h1>File Explorer</h1>
+  <h1>Explorer</h1>
   <ol>
     ${files.map(file => {
       const fileName = path.basename(file, path.extname(file));
