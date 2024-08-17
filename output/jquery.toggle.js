@@ -36,3 +36,5 @@ $(function() {
 // 画像リンクには装飾しない
   $('img').parent('a').addClass('bg-none');
 });
+
+console.log("toggle.js looks good")
