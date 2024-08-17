@@ -24,3 +24,5 @@ $(function () {
   });
 
 });
+
+console.log("scroll.js looks good")
