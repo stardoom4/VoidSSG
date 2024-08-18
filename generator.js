@@ -59,7 +59,6 @@ function generateFileExplorerPage(files) {
     <h1><a href="/">Explorer</a></h1>
   </header>
   <main>
-    <h1>Explorer</h1>
     <ol>
       ${files.map(file => {
         const fileName = path.basename(file, path.extname(file));
@@ -101,6 +100,7 @@ function generateTagPages(tagMap) {
     <h1>Tag: ${tag}</h1>
   </header>
   <main>
+  <strong><p>Pages tagged with ${tag}</p></strong>
     <ul>
       ${pages.map(page => `<li><a href="${page}.html">${page}</a></li>`).join('')}
     </ul>
