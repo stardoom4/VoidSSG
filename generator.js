@@ -4,64 +4,71 @@ const marked = require('markdown-it')({
   html: true,
 });
 const nunjucks = require('nunjucks');
-const querystring = require('querystring');
-
-// Set up Nunjucks environment
-const env = nunjucks.configure(templatesDir, {
-  autoescape: true,
-});
-
-// Custom URL Encode Filter
-env.addFilter('url_encode', function(str) {
-  return querystring.escape(str);
-});
-
 // Set up Nunjucks environment
 const templatesDir = path.join(__dirname, 'templates');
 const outputDir = path.join(__dirname, 'output');
-const tagsDir = path.join(outputDir, 'tags');
 
 // Create the output directory if it doesn't exist
 if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir);
 }
 
-// Create the tags directory if it doesn't exist
-if (!fs.existsSync(tagsDir)) {
-  fs.mkdirSync(tagsDir);
-}
-
 const env = nunjucks.configure(templatesDir, {
   autoescape: true,
 });
-
-function convertMarkdownToHTML(markdown) {
-  return marked.render(markdown);
-}
+@@ -24,9 +30,10 @@ function convertMarkdownToHTML(markdown) {
 
 function processWikiLinks(content) {
   const wikiLinkRegex = /\[([^\]]+)\]\(([^)]+)\.md\)/g;
-  const processedContent = content.replace(wikiLinkRegex, (match, text, link) => {
+  return content.replace(wikiLinkRegex, (match, text, link) => {
     return `<a href="${link}.html">${text}</a>`;
   });
-  return processedContent;
 }
 
 function extractTags(content) {
-  const tagRegex = /Tags:\s*([\w\s,]+)/i;
-  const match = content.match(tagRegex);
-  return match ? match[1].split(',').map(tag => tag.trim()) : [];
-}
-
-function getFilesInDirectory(directory) {
-  return fs.readdirSync(directory).filter(file => {
-    const filePath = path.join(directory, file);
-    return fs.statSync(filePath).isFile() && path.extname(file) === '.md';
+@@ -42,7 +49,7 @@ function getFilesInDirectory(directory) {
   });
 }
 
-function generateFileExplorerPage(files, outputDir) {
+function generateFileExplorerPage(files) {
   const explorerTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+@@ -55,20 +62,61 @@ function generateFileExplorerPage(files) {
+</head>
+<body>
+<div id="wrapper">
+  <header>
+    <h1><a href="/">Explorer</a></h1>
+  </header>
+  <main>
+    <ol>
+      ${files.map(file => {
+        const fileName = path.basename(file, path.extname(file));
+        return `<li><a href="${fileName}.html">${file}</a></li>`;
+      }).join('')}
+    </ol>
+  </main>
+  <footer>
+    <div id="fl"><a href="http://foollovers.com" target="_blank">designed</a></div>
+  </footer>
+</div>
+<a href="#" id="pagetop">▲top</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+@@ -81,89 +129,62 @@ function generateFileExplorerPage(files) {
+  fs.writeFileSync(path.join(outputDir, 'explorer.html'), explorerTemplate);
+}
+
+const outputHtml = nunjucks.render('page-template.html', {
+  content: convertMarkdownToHTML(processedContent),
+  title: pageName,
+  tags: tags  // Pass the tags to the template
+});
+
+function generateTagPages(tagMap) {
+  Object.keys(tagMap).forEach(tag => {
+    const pages = tagMap[tag];
+    const tagPageContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,65 +76,22 @@ function generateFileExplorerPage(files, outputDir) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
   <meta charset="UTF-8">
-  <title>Explorer</title>
+  <title>Tag: ${tag}</title>
 </head>
 <body>
 <div id="wrapper">
-
-<!-- メニューを開くボタン&前に戻るボタン -->
-<div id="open"><span id="open-icon"></span><span class="open-text">menu</span></div>
-<div id="back"><a href="javascript:history.back();"><span class="back-text">back</span></a></div>
-
-<!-- ▼ヘッダ▼ -->
-<header>
-<div id="header-inner">
-<!-- サイト名 -->
-<h1><a href="/">Explorer</a></h1>
-</div>
-</header>
-<div id="contents" class="cf">
-<div id="rightcolumn-wrap">  
-<div id="rightcolumn">
-<article>
-<main>
-  <h1>Explorer</h1>
-  <ol>
-    ${files.map(file => {
-      const fileName = path.basename(file, path.extname(file));
-      return `<li><a href="${fileName}.html">${file}</a></li>`;
-    }).join('')}
-  </ol>
+  <header>
+    <h1>Tag: ${tag}</h1>
+  </header>
+  <main>
+  <strong><p>Pages tagged with ${tag}</p></strong>
+    <ul>
+      ${pages.map(page => `<li><a href="${page}.html">${page}</a></li>`).join('')}
+    </ul>
   </main>
-</article>
-
-</div></div><!-- ▲右側▲ -->
-
-
-<!-- ▼左側▼ -->
-<div id="side-bg"></div>
-<div id="leftcolumn-wrap">
-<div id="leftcolumn">
-
-<!-- ▼メニュー▼ -->
-<h2>Menu</h2>
-<div id="menu">
-<nav>
-<ul>
-
-<li><span>SITE MAP</span>
- <ul>
-  <li><a href="/">HOME</a>
-  <li><a href="explorer.html">EXPLORER</a>
- </ul>
-</li>
-</ul>
-</nav>
-</div>
-</div></div>
-</div>
-<footer>
-<div id="fl"><a href="http://foollovers.com" target="_blank">designed</a></div>
-</footer>
+  <footer>
+    <div id="fl"><a href="http://foollovers.com" target="_blank">designed</a></div>
+  </footer>
 </div>
 <a href="#" id="pagetop">▲top</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
@@ -135,53 +99,37 @@ function generateFileExplorerPage(files, outputDir) {
 <script src="/jquery.toggle.js"></script>
 </body>
 </html>
-  `;
+    `;
 
-  fs.writeFileSync(path.join(outputDir, 'explorer.html'), explorerTemplate);
-}
-
-function generateTagPage(tag, pages, outputDir) {
-  const tagPageContent = nunjucks.render('tag-template.html', {
-    tag: tag,
-    pages: pages
+    fs.writeFileSync(path.join(outputDir, `tag-${tag}.html`), tagPageContent);
   });
-
-  const outputPath = path.join(outputDir, `tag-${encodeURIComponent(tag)}.html`);
-  fs.writeFileSync(outputPath, tagPageContent);
 }
 
 function generatePages() {
   const pagesDir = path.join(__dirname, 'pages');
-
-  // Get list of files
   const files = getFilesInDirectory(pagesDir);
-
   const tagMap = {};
 
-  // Generate each page
   files.forEach((fileName) => {
     const filePath = path.join(pagesDir, fileName);
 
     if (fs.statSync(filePath).isFile() && path.extname(fileName) === '.md') {
       const pageContent = fs.readFileSync(filePath, 'utf-8');
-
-      const processedContent = processWikiLinks(pageContent);
       const tags = extractTags(pageContent);
 
-      // Map tags to pages
+      // Update tag map
       tags.forEach(tag => {
         if (!tagMap[tag]) {
           tagMap[tag] = [];
         }
-        tagMap[tag].push(fileName);
+        tagMap[tag].push(path.basename(fileName, path.extname(fileName)));
       });
 
+      const processedContent = processWikiLinks(pageContent);
       const pageName = path.basename(fileName, path.extname(fileName));
-
       const outputHtml = nunjucks.render('page-template.html', {
         content: convertMarkdownToHTML(processedContent),
         title: pageName,
-        tags: tags  // Pass the tags to the template
       });
 
       const outputPath = path.join(outputDir, `${pageName}.html`);
@@ -189,13 +137,11 @@ function generatePages() {
     }
   });
 
-  // Generate tag pages
-  Object.keys(tagMap).forEach(tag => {
-    generateTagPage(tag, tagMap[tag], tagsDir);
-  });
-
   // Generate the file explorer page
-  generateFileExplorerPage(files, outputDir);
+  generateFileExplorerPage(files);
+
+  // Generate tag pages
+  generateTagPages(tagMap);
 }
 
 generatePages();
