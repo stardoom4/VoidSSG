@@ -4,6 +4,7 @@ const marked = require('markdown-it')({
   html: true,
 });
 const nunjucks = require('nunjucks');
+
 // Set up Nunjucks environment
 const templatesDir = path.join(__dirname, 'templates');
 const outputDir = path.join(__dirname, 'output');
@@ -16,7 +17,10 @@ if (!fs.existsSync(outputDir)) {
 const env = nunjucks.configure(templatesDir, {
   autoescape: true,
 });
-@@ -24,9 +30,10 @@ function convertMarkdownToHTML(markdown) {
+
+function convertMarkdownToHTML(markdown) {
+  return marked.render(markdown);
+}
 
 function processWikiLinks(content) {
   const wikiLinkRegex = /\[([^\]]+)\]\(([^)]+)\.md\)/g;
@@ -26,7 +30,15 @@ function processWikiLinks(content) {
 }
 
 function extractTags(content) {
-@@ -42,7 +49,7 @@ function getFilesInDirectory(directory) {
+  const tagRegex = /Tags:\s*([\w\s,]+)/i;
+  const match = content.match(tagRegex);
+  return match ? match[1].split(',').map(tag => tag.trim()) : [];
+}
+
+function getFilesInDirectory(directory) {
+  return fs.readdirSync(directory).filter(file => {
+    const filePath = path.join(directory, file);
+    return fs.statSync(filePath).isFile() && path.extname(file) === '.md';
   });
 }
 
@@ -34,7 +46,12 @@ function generateFileExplorerPage(files) {
   const explorerTemplate = `
 <!DOCTYPE html>
 <html lang="en">
-@@ -55,20 +62,61 @@ function generateFileExplorerPage(files) {
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <title>Explorer</title>
 </head>
 <body>
 <div id="wrapper">
@@ -42,6 +59,7 @@ function generateFileExplorerPage(files) {
     <h1><a href="/">Explorer</a></h1>
   </header>
   <main>
+    <h1>Explorer</h1>
     <ol>
       ${files.map(file => {
         const fileName = path.basename(file, path.extname(file));
@@ -55,15 +73,14 @@ function generateFileExplorerPage(files) {
 </div>
 <a href="#" id="pagetop">▲top</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-@@ -81,89 +129,62 @@ function generateFileExplorerPage(files) {
+<script src="/jquery.scroll.js"></script>
+<script src="/jquery.toggle.js"></script>
+</body>
+</html>
+  `;
+
   fs.writeFileSync(path.join(outputDir, 'explorer.html'), explorerTemplate);
 }
-
-const outputHtml = nunjucks.render('page-template.html', {
-  content: convertMarkdownToHTML(processedContent),
-  title: pageName,
-  tags: tags  // Pass the tags to the template
-});
 
 function generateTagPages(tagMap) {
   Object.keys(tagMap).forEach(tag => {
@@ -84,7 +101,6 @@ function generateTagPages(tagMap) {
     <h1>Tag: ${tag}</h1>
   </header>
   <main>
-  <strong><p>Pages tagged with ${tag}</p></strong>
     <ul>
       ${pages.map(page => `<li><a href="${page}.html">${page}</a></li>`).join('')}
     </ul>
