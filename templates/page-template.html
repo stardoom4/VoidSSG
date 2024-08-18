@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/style.css">
   <title>{{ title }}</title>
+</head>
 <body>
 <!-- ▼全体の囲み▼ -->
 <div id="wrapper">
@@ -32,6 +33,18 @@
  <main>
 
     {{ content | safe }}
+
+    <!-- Tags Section -->
+    {% if tags %}
+      <div class="tags">
+        <h3>Tags:</h3>
+        <ul>
+          {% for tag in tags %}
+            <li><a href="tag-{{ tag | url_encode }}.html">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
 
   </main>
 </article>
