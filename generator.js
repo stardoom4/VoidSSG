@@ -4,6 +4,17 @@ const marked = require('markdown-it')({
   html: true,
 });
 const nunjucks = require('nunjucks');
+const querystring = require('querystring');
+
+// Set up Nunjucks environment
+const env = nunjucks.configure(templatesDir, {
+  autoescape: true,
+});
+
+// Custom URL Encode Filter
+env.addFilter('url_encode', function(str) {
+  return querystring.escape(str);
+});
 
 // Set up Nunjucks environment
 const templatesDir = path.join(__dirname, 'templates');
