@@ -81,6 +81,12 @@ function generateFileExplorerPage(files) {
   fs.writeFileSync(path.join(outputDir, 'explorer.html'), explorerTemplate);
 }
 
+const outputHtml = nunjucks.render('page-template.html', {
+  content: convertMarkdownToHTML(processedContent),
+  title: pageName,
+  tags: tags  // Pass the tags to the template
+});
+
 function generateTagPages(tagMap) {
   Object.keys(tagMap).forEach(tag => {
     const pages = tagMap[tag];
