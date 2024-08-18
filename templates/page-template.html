@@ -34,18 +34,6 @@
 
     {{ content | safe }}
 
-    <!-- Tags Section -->
-    {% if tags %}
-      <div class="tags">
-        <h3>Tags:</h3>
-        <ul>
-          {% for tag in tags %}
-            <li><a href="tag-{{ tag | url_encode }}.html">{{ tag }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-    {% endif %}
-
   </main>
 </article>
 
