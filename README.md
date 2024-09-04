@@ -1,5 +1,7 @@
 # VOID
-This is a Static Site Generator written in JavaScript.
+This is a Static Site Generator written in JavaScript.<br>
+I have used [Foollovers](https://foollovers.com/) html template for styling the site.
+Read the [terms](https://foollovers.com/te/index.html) before removing the "Designed" link from the Footer.
 ## How to use ?
 - First of all clone this Repository.
 - Customize the css in outout directory.(Optional)
